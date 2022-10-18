@@ -27,7 +27,7 @@ namespace ClassesFlotte
         /// <returns>true si ajout du véhicule effectué ou false dans le cas contraire</returns>
         public bool AjouterVehicule(Vehicule unVehicule)
         {
-            string pattern = @"";
+            string pattern = @"^[A-Z]{2}-[0-9]{3}-[A-Z]{2}$";
             bool match = Regex.IsMatch(unVehicule.GetImmat(), pattern);
             if (match)
             {
@@ -53,8 +53,13 @@ namespace ClassesFlotte
         /// <returns>liste des vehicules à entretenir</returns>
         public List<Vehicule> PrevoirEntretien()
         {
-            // TODO
-            return null;
+            List<Vehicule> aEntretenir = new List<Vehicule>();
+            foreach (Vehicule v in this.lesVehicules)
+            {
+                if (v.PrevoirEntretien())
+                    aEntretenir.Add(v);
+            }
+            return aEntretenir;
         }
 
         /// <summary>
@@ -63,8 +68,13 @@ namespace ClassesFlotte
         /// <returns>nombre de véhicules de tourisme</returns>
         public int NbVehiculesTourisme()
         {
-            // TODO
-            return 0;
+            int nbTourisme = 0;
+            foreach (Vehicule v in this.lesVehicules)
+            {
+                if (v is Tourisme)
+                    nbTourisme++;
+            }
+            return nbTourisme;
         }
 
     }
